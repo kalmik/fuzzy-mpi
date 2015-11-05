@@ -1,0 +1,518 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"the",
+				"threads"
+			],
+			[
+				"threa",
+				"thread_args"
+			],
+			[
+				"th",
+				"thread_args"
+			],
+			[
+				"tr",
+				"thread_args"
+			],
+			[
+				"get",
+				"getInputSize"
+			],
+			[
+				"w",
+				"weights2"
+			],
+			[
+				"_",
+				"_alpha"
+			],
+			[
+				"out",
+				"outputSize"
+			],
+			[
+				"in",
+				"index"
+			],
+			[
+				"for",
+				"forward"
+			],
+			[
+				"fi",
+				"fitOutput"
+			],
+			[
+				"err",
+				"errd"
+			],
+			[
+				"fit",
+				"fitSize"
+			],
+			[
+				"pp",
+				"pipe_tx"
+			],
+			[
+				"pip",
+				"pipe_rx"
+			],
+			[
+				"pid",
+				"pidS"
+			],
+			[
+				"pi",
+				"pipe_tx"
+			],
+			[
+				"def",
+				"define"
+			],
+			[
+				"st",
+				"stderr"
+			],
+			[
+				"Head",
+				"HEADLIGHTS_CONTROLLER"
+			],
+			[
+				"str",
+				"strcmp"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": "",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/sergio/fuzzy-loader"
+	],
+	"file_history":
+	[
+		"/home/sergio/jarvis/NeuralNetwork/neuron.cpp",
+		"/home/sergio/jarvis/NeuralNetwork/network.cpp",
+		"/home/sergio/jarvis/NeuralNetwork/layer.cpp",
+		"/home/sergio/jarvis/NeuralNetwork/layer.h",
+		"/home/sergio/jarvis/NeuralNetwork/main.cpp",
+		"/home/sergio/jarvis/NeuralNetwork/neuron.h",
+		"/home/sergio/jarvis/NeuralNetwork/network.h",
+		"/home/sergio/Qscope/src/qscope.cpp",
+		"/home/sergio/Qscope/Qscope.pro.user",
+		"/home/sergio/UFRN/Controle/Qscope/Microprocessor/code.asm",
+		"/home/sergio/edison/home/root/BRAIM/braim-car/src/MM/src/main.c",
+		"/home/sergio/edison/home/root/BRAIM/braim-car/src/lib/SmartCar/smartcar.h",
+		"/home/sergio/edison/home/root/BRAIM/braim-car/src/lib/SmartCar/smartcar.cpp",
+		"/home/sergio/edison/home/root/BRAIM/braim-car/tests/testPipeWrite.cpp",
+		"/run/user/1000/gvfs/sftp:host=edison-lab10.local/home/root/BRAIM/braim-car/src/lib/macros.h",
+		"/run/user/1000/gvfs/sftp:host=edison-lab10.local/home/root/BRAIM",
+		"/run/user/1000/gvfs/sftp:host=edison-lab10.local/home/root/BRAIM/braim-car/src/lib/SmartCar/smartcar.h",
+		"/run/user/1000/gvfs/sftp:host=edison-lab10.local/home/root/BRAIM/braim-car/src/lib/SmartCar/smartcar.cpp",
+		"/run/user/1000/gvfs/sftp:host=edison-lab10.local/home/root/BRAIM/braim-car/tests/testSmartCar.cpp",
+		"/run/user/1000/gvfs/sftp:host=edison-lab10.local/home/root/BRAIM/braim-car/src/lib/COM/SPI/spi.h",
+		"/run/user/1000/gvfs/sftp:host=edison-lab10.local/home/root/BRAIM/braim-car/src/lib/SmartCar/headlights.h",
+		"/run/user/1000/gvfs/sftp:host=edison-lab10.local/home/root/BRAIM/braim-car/src/skills/src/toggle-led/toggle.cpp",
+		"/run/user/1000/gvfs/sftp:host=edison-lab10.local/home/root/BRAIM/braim-car/modules-extern/common.c",
+		"/run/user/1000/gvfs/sftp:host=edison-lab10.local/home/root/BRAIM/braim-car/src/lib/COM/SPI/spi.cpp",
+		"/home/sergio/ark-aic/sm-sc/src/API/node_modules/SMSC/lib/smsc.js",
+		"/home/sergio/ark-aic/sm-sc/src/skills/src/headlight/package.h",
+		"/home/sergio/ark-aic/sm-sc/src/lib/COM/SPI/spi.cpp",
+		"/home/sergio/ark-aic/sm-sc/src/API/server.js",
+		"/home/sergio/ark-aic/sm-sc/src/skills/src/headlight/headlight.cpp",
+		"/home/sergio/ark-aic/sm-sc/modules-extern/common.c",
+		"/home/sergio/ark-aic/sm-sc/doc/flowchart.tex",
+		"/home/sergio/ark-aic/sm-sc/doc/docv1p0.tex",
+		"/home/sergio/ark-aic/sm-sc/src/smsc.js",
+		"/home/sergio/ark-aic/sm-sc/src/skill1.c",
+		"/home/sergio/intelGalileo-projects/fuzzyLogic/C/startup.txt",
+		"/home/sergio/intelGalileo-projects/fuzzyLogic/C/lib/fuzzy.h",
+		"/home/sergio/intelGalileo-projects/fuzzyLogic/C/fuzzy.c",
+		"/home/sergio/Downloads/serialPython.py",
+		"/home/sergio/Downloads/serialReader.py",
+		"/home/sergio/UFRN/projetos/libC/ fuzzy.c",
+		"/home/sergio/.bashrc"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"thread_args",
+			"arguments",
+			"Network",
+			"//printf(\"\\033[1A\");\n	//printf(\"MSE = %.10f\\n\", mse);",
+			"Channel",
+			"4->setParent",
+			"setParent",
+			"0->setParent",
+			"Channel",
+			"00;",
+			"0",
+			"0;",
+			" = new QAction(\"Set Point Error\", this)",
+			"rc0",
+			"rChannels0",
+			"*menu0",
+			"channel0",
+			"1()))",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0",
+			"rc0",
+			"RC0"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"auto_name": "",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "fuzzy-loader.sublime-project",
+	"replace":
+	{
+		"height": 46.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"NeuralNetwork/neuron.h"
+			],
+			[
+				"macr",
+				"braim-car/src/lib/macros.h"
+			],
+			[
+				"test",
+				"braim-car/tests/testSmartCar.cpp"
+			],
+			[
+				"pip",
+				"braim-car/src/lib/COM/pipe/pipe.cpp"
+			],
+			[
+				"pipe",
+				"braim-car/src/lib/COM/pipe/pipe.h"
+			],
+			[
+				"head",
+				"braim-car/src/lib/SmartCar/headlights.h"
+			],
+			[
+				"smar",
+				"braim-car/src/lib/SmartCar/smartcar.cpp"
+			],
+			[
+				"smartcar",
+				"braim-car/src/lib/SmartCar/smartcar.cpp"
+			],
+			[
+				"com",
+				"modules-extern/common.c"
+			],
+			[
+				"to",
+				"src/skills/src/toggle-led/toggle.cpp"
+			],
+			[
+				"spi",
+				"src/lib/COM/SPI/spi.h"
+			],
+			[
+				"skill",
+				"src/skill1.c"
+			],
+			[
+				"sta",
+				"fuzzyLogic/C/startup.txt"
+			],
+			[
+				"fu",
+				"fuzzyLogic/C/lib/fuzzy.h"
+			],
+			[
+				"fuzz",
+				"fuzzyLogic/C/fuzzy.c"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 190.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
