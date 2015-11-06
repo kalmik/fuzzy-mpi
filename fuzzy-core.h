@@ -27,7 +27,7 @@
 
 	float trapmf(float _value, float _points[]);
 
-	float fuzzify(float _value, pertinence _points);
+	float fuzzify(float _value, float* _points, int size);
 
 	float defuzzify(rule _rules[], int _size);
 
