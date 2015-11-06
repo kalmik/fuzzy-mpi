@@ -28,8 +28,8 @@ int main(int argc, char* argv[])
     char linebuffer[MAX_BUFFER];
     int i;
 
-    int numInputs;
-    int numOutputs;
+    int numInputsMFS;
+    int numOutputsMFS;
     int numRules;
 
     float **inputs, **outputs;
@@ -38,72 +38,106 @@ int main(int argc, char* argv[])
     char pack_iosz[sizeof(int)*3];
   	int pos = 0;
  
-
+  	/*Initializing config------------------------------------------------*/
     if(my_rank == 0) {
 	    fp = fopen(path, "r");
 
-	    numInputs = get_numInputs(fp);
-	    numOutputs = get_numOutputs(fp);
+	    numInputsMFS = get_numInputs(fp);
+	    numOutputsMFS = get_numOutputs(fp);
 	    numRules = get_numRules(fp);
 
-	    MPI_Pack(&numInputs, 1, MPI_INT, pack_iosz, sizeof(int)*3, &pos, comm);
-		MPI_Pack(&numOutputs, 1, MPI_INT, pack_iosz, sizeof(int)*3, &pos, comm);
+	    local_n = (int)(my_rank < (numRules%p)) + (numRules/p);
+
+	    MPI_Pack(&numInputsMFS, 1, MPI_INT, pack_iosz, sizeof(int)*3, &pos, comm);
+		MPI_Pack(&numOutputsMFS, 1, MPI_INT, pack_iosz, sizeof(int)*3, &pos, comm);
 		MPI_Pack(&numRules, 1, MPI_INT, pack_iosz, sizeof(int)*3, &pos, comm);
 
 		MPI_Bcast(pack_iosz, sizeof(int)*3, MPI_PACKED, 0, comm);
 	    
-	    inputs = malloc(sizeof(float*)*numInputs);
-	    inputs_sz = malloc(sizeof(int)*numInputs);
+	    inputs = malloc(sizeof(float*)*numInputsMFS);
+	    inputs_sz = malloc(sizeof(int)*numInputsMFS);
 
-	    for(i = 0; i < numInputs; i++)
+	    for(i = 0; i < numInputsMFS; i++)
 	        inputs[i] = load_input(fp, &inputs_sz[i]);
 
-	    outputs = malloc(sizeof(float*)*numOutputs);
-	    outputs_sz = malloc(sizeof(int)*numOutputs);
-	    for(i = 0; i < numOutputs; i++)
+	    outputs = malloc(sizeof(float*)*numOutputsMFS);
+	    outputs_sz = malloc(sizeof(int)*numOutputsMFS);
+	    for(i = 0; i < numOutputsMFS; i++)
 	        outputs[i] = load_output(fp, &outputs_sz[i]); 
 
-	    rules = load_rules(fp, numInputs, numOutputs, numRules, &rules_sz);
+	    rules = load_rules(fp, numInputsMFS, numOutputsMFS, numRules, &rules_sz);
 
-		/*#ifdef DEBUG
-	    printf("NumInputs = %i\n", numInputs);
-	    printf("NumOutputs = %i\n", numOutputs);
-	    printf("NumRules = %i\n", numRules);
-	    printf("input1 \n");
-	    for(i = 0; i < inputs_sz[1]; i++)
-	        printf("%.1f ", inputs[1][i]);
-	    printf("\n");
-	    printf("output\n");
-	    for(i = 0; i < outputs_sz[0]; i++)
-	        printf("%.1f ", outputs[0][i]);
-	    printf("\n");
-	    printf("rules qtd = %i\n", rules_sz);
-	    for(i = 0; i < rules_sz; i++)
-	        printf("%i ", rules[i]);
-	    printf("\n");
-		#endif*/
+
+	    MPI_Bcast(inputs_sz, numInputsMFS, MPI_INT, 0, comm);
+	    MPI_Bcast(outputs_sz, numOutputsMFS, MPI_INT, 0, comm);
+
+	    for(i = 0; i < numInputsMFS; i++)
+	        MPI_Bcast(inputs[i], inputs_sz[i], MPI_FLOAT, 0, comm);
+
+	    for(i = 0; i < numOutputsMFS; i++)
+	        MPI_Bcast(outputs[i], outputs_sz[i], MPI_FLOAT, 0, comm);
 
 	    fclose(fp);
-	}
-	else {
+
+
+	} else {
+
 		MPI_Bcast(pack_iosz, sizeof(int)*3, MPI_PACKED, 0, comm);
 
-		MPI_Unpack(pack_iosz, sizeof(int)*3, &pos, &numInputs, 1, MPI_INT, comm);  
-		MPI_Unpack(pack_iosz, sizeof(int)*3, &pos, &numOutputs, 1, MPI_INT, comm);  
+		MPI_Unpack(pack_iosz, sizeof(int)*3, &pos, &numInputsMFS, 1, MPI_INT, comm);  
+		MPI_Unpack(pack_iosz, sizeof(int)*3, &pos, &numOutputsMFS, 1, MPI_INT, comm);  
 		MPI_Unpack(pack_iosz, sizeof(int)*3, &pos, &numRules, 1, MPI_INT, comm);
 
-		inputs = malloc(sizeof(float*)*numInputs);
-		outputs = malloc(sizeof(float*)*numOutputs);
-		rules = load_rules(fp, numInputs, numOutputs, numRules, &rules_sz);
+		local_n = (int)(my_rank < (numRules%p)) + (numRules/p);
+
+		inputs = malloc(sizeof(float*)*numInputsMFS);
+		outputs = malloc(sizeof(float*)*numOutputsMFS);
+		
+		inputs_sz = malloc(sizeof(int)*numInputsMFS);
+		outputs_sz = malloc(sizeof(int)*numOutputsMFS);
+
+		MPI_Bcast(inputs_sz, numInputsMFS, MPI_INT, 0, comm);
+	    MPI_Bcast(outputs_sz, numOutputsMFS, MPI_INT, 0, comm);
+
+	    for(i = 0; i < numInputsMFS; i++){
+	    	inputs[i] = malloc(sizeof(float)*inputs_sz[i]);
+	        MPI_Bcast(inputs[i], inputs_sz[i], MPI_FLOAT, 0, comm);
+	    }
+
+	    for(i = 0; i < numOutputsMFS; i++){
+	    	outputs[i] = malloc(sizeof(float)*outputs_sz[i]);
+	        MPI_Bcast(outputs[i], outputs_sz[i], MPI_FLOAT, 0, comm);
+	    }
 
 
 	}
+	/*----------------------------------------------------------------*/
+
+	/*Read inputs and broadcast them----------------------------------*/
+
+	//TODO
+
+	/*----------------------------------------------------------------*/
+
+	/*Computing-------------------------------------------------------*/
+
+	//TODO
+
+	/*----------------------------------------------------------------*/
+
+	/*Reduce values---------------------------------------------------*/
+
+	//TODO
+
+	/*----------------------------------------------------------------*/
 
 	#ifdef DEBUG
-	printf("my_rank = %i NumInputs = %i\n", my_rank, numInputs);
-	printf("my_rank = %i NumOutputs = %i\n", my_rank, numOutputs);
+	printf("my_rank = %i NumInputsMFS = %i\n", my_rank, numInputsMFS);
+	printf("my_rank = %i NumOutputsMFS = %i\n", my_rank, numOutputsMFS);
 	printf("my_rank = %i NumRules = %i\n", my_rank, numRules);
+	printf("my_rank = %i Rules = %i\n", my_rank, local_n);
 	#endif
+
 
 
     MPI_Finalize();
