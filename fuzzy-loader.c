@@ -58,6 +58,7 @@ float* pack_io(FILE* fp, int* sz)
     int foundline = 0;
     int tmp;
     char type[10];
+    char name[10];
 
     int size = 0;
     int offsetR = 0;
@@ -76,8 +77,8 @@ float* pack_io(FILE* fp, int* sz)
 
     stackL[offsetL++] = tmp;
     for(tmp; tmp>0; tmp--){
-        foundline = fscanf(fp, "MF%*i=\'%*c\':\'%[a-z]\',[%f %f %f %f]\n", type, &a, &b, &c, &d);
-        if(foundline != 5){ /* trimf case, read only 3 floats*/
+        foundline = fscanf(fp, "MF%*i=\'%[aA-zZ]\':\'%[a-z]\',[%f %f %f %f]\n", name, type, &a, &b, &c, &d);
+        if(foundline != 6){ /* trimf case, read only 3 floats*/
             next_line(fp);
             size+= 3;
             stackR = realloc(stackR, (sizeof(float))*size);

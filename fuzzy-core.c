@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "fuzzy-core.h"
 
 float max(float _a, float _b){
@@ -38,18 +39,11 @@ float fuzzify(float _value, float* _points, int size){
 	return trapmf(_value,_points);
 }
 
-float defuzzify(rule _rules[], int _size){//bySum
+void defuzzify( double _value, float* _rules, int _size, double* uX, double* u){
 	int i,j;
-	float uX = 0;
-	float  u = 0;
-	pertinence *p;
-	for(i=0; i<_size;i++){
-		p = _rules[i].then;
-		for(j=0;j<(*p).size;j++){
-			uX += (*p).data[j]*(_rules[i].value);
-			 u += _rules[i].value;
-		}
+	for(i = 0; i < _size; i++){
+		*uX += _rules[i]*_value;
+		//printf("%f\n", _rules[i]);
+		*u += _value;
 	}
-	return uX/u;
-
 }

@@ -29,6 +29,6 @@
 
 	float fuzzify(float _value, float* _points, int size);
 
-	float defuzzify(rule _rules[], int _size);
+	void defuzzify( double _value, float* _rules, int _size, double* uX, double* u);
 
 #endif

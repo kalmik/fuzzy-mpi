@@ -28,20 +28,27 @@ int main(int argc, char* argv[])
     FILE* fp;
     int foundline = 0;
     char linebuffer[MAX_BUFFER];
-    int i,j,k;
+    /*Iterators-------------------------------------------------*/
+    int i,j,k,l;
 
-    int numInputsMFS;
-    int numOutputsMFS;
+    int numInputs;
+    int numOutputs;
     int numRules;
 
     float **inputs, **outputs;
     int *inputs_sz, *outputs_sz, *rules, *local_rules, rules_sz, rules_sz_ln, local_rules_sz;
     double *in, *out;
 
-    double* fuzzyValues;
+    double *fuzzyValues, *outValues;
 
     char pack_iosz[sizeof(int)*3];
   	int pos = 0;
+
+	int jump;
+	float* cur_MF;
+	double* cur_value_v;
+	double cur_value;
+	int cur_MF_sz;
 
   	//rules scatterv structure
   	int* sendcounts;
@@ -51,41 +58,41 @@ int main(int argc, char* argv[])
     if(my_rank == 0) {
 	    fp = fopen(path, "r");
 
-	    numInputsMFS = get_numInputs(fp);
-	    numOutputsMFS = get_numOutputs(fp);
+	    numInputs = get_numInputs(fp);
+	    numOutputs = get_numOutputs(fp);
 	    numRules = get_numRules(fp);
 
 	    local_n = (int)(my_rank < (numRules%p)) + (numRules/p);
 
-	    MPI_Pack(&numInputsMFS, 1, MPI_INT, pack_iosz, sizeof(int)*3, &pos, comm);
-		MPI_Pack(&numOutputsMFS, 1, MPI_INT, pack_iosz, sizeof(int)*3, &pos, comm);
+	    MPI_Pack(&numInputs, 1, MPI_INT, pack_iosz, sizeof(int)*3, &pos, comm);
+		MPI_Pack(&numOutputs, 1, MPI_INT, pack_iosz, sizeof(int)*3, &pos, comm);
 		MPI_Pack(&numRules, 1, MPI_INT, pack_iosz, sizeof(int)*3, &pos, comm);
 
 		MPI_Bcast(pack_iosz, sizeof(int)*3, MPI_PACKED, 0, comm);
 	    
-	    inputs = malloc(sizeof(float*)*numInputsMFS);
-	    inputs_sz = malloc(sizeof(int)*numInputsMFS);
+	    inputs = malloc(sizeof(float*)*numInputs);
+	    inputs_sz = malloc(sizeof(int)*numInputs);
 
-	    for(i = 0; i < numInputsMFS; i++)
+	    for(i = 0; i < numInputs; i++)
 	        inputs[i] = load_input(fp, &inputs_sz[i]);
 
-	    outputs = malloc(sizeof(float*)*numOutputsMFS);
-	    outputs_sz = malloc(sizeof(int)*numOutputsMFS);
-	    for(i = 0; i < numOutputsMFS; i++)
+	    outputs = malloc(sizeof(float*)*numOutputs);
+	    outputs_sz = malloc(sizeof(int)*numOutputs);
+	    for(i = 0; i < numOutputs; i++)
 	        outputs[i] = load_output(fp, &outputs_sz[i]); 
 
-	    rules = load_rules(fp, numInputsMFS, numOutputsMFS, numRules, &rules_sz);
-	    rules_sz_ln = 1 + numInputsMFS + numOutputsMFS;
+	    rules = load_rules(fp, numInputs, numOutputs, numRules, &rules_sz);
+	    rules_sz_ln = 1 + numInputs + numOutputs;
 	    local_rules_sz = local_n*rules_sz_ln;
 
-	    MPI_Bcast(inputs_sz, numInputsMFS, MPI_INT, 0, comm);
-	    MPI_Bcast(outputs_sz, numOutputsMFS, MPI_INT, 0, comm);
+	    MPI_Bcast(inputs_sz, numInputs, MPI_INT, 0, comm);
+	    MPI_Bcast(outputs_sz, numOutputs, MPI_INT, 0, comm);
 
 	    //Broadcasting MFS
-	    for(i = 0; i < numInputsMFS; i++)
+	    for(i = 0; i < numInputs; i++)
 	        MPI_Bcast(inputs[i], inputs_sz[i], MPI_FLOAT, 0, comm);
 
-	    for(i = 0; i < numOutputsMFS; i++)
+	    for(i = 0; i < numOutputs; i++)
 	        MPI_Bcast(outputs[i], outputs_sz[i], MPI_FLOAT, 0, comm);
 
 	    fclose(fp);
@@ -112,30 +119,30 @@ int main(int argc, char* argv[])
 
 		MPI_Bcast(pack_iosz, sizeof(int)*3, MPI_PACKED, 0, comm);
 
-		MPI_Unpack(pack_iosz, sizeof(int)*3, &pos, &numInputsMFS, 1, MPI_INT, comm);  
-		MPI_Unpack(pack_iosz, sizeof(int)*3, &pos, &numOutputsMFS, 1, MPI_INT, comm);  
+		MPI_Unpack(pack_iosz, sizeof(int)*3, &pos, &numInputs, 1, MPI_INT, comm);  
+		MPI_Unpack(pack_iosz, sizeof(int)*3, &pos, &numOutputs, 1, MPI_INT, comm);  
 		MPI_Unpack(pack_iosz, sizeof(int)*3, &pos, &numRules, 1, MPI_INT, comm);
 
 		local_n = (int)(my_rank < (numRules%p)) + (numRules/p);
 
-		rules_sz_ln = 1 + numInputsMFS + numOutputsMFS;
+		rules_sz_ln = 1 + numInputs + numOutputs;
 		local_rules_sz = local_n*rules_sz_ln;
 
-		inputs = malloc(sizeof(float*)*numInputsMFS);
-		outputs = malloc(sizeof(float*)*numOutputsMFS);
+		inputs = malloc(sizeof(float*)*numInputs);
+		outputs = malloc(sizeof(float*)*numOutputs);
 		
-		inputs_sz = malloc(sizeof(int)*numInputsMFS);
-		outputs_sz = malloc(sizeof(int)*numOutputsMFS);
+		inputs_sz = malloc(sizeof(int)*numInputs);
+		outputs_sz = malloc(sizeof(int)*numOutputs);
 
-		MPI_Bcast(inputs_sz, numInputsMFS, MPI_INT, 0, comm);
-	    MPI_Bcast(outputs_sz, numOutputsMFS, MPI_INT, 0, comm);
+		MPI_Bcast(inputs_sz, numInputs, MPI_INT, 0, comm);
+	    MPI_Bcast(outputs_sz, numOutputs, MPI_INT, 0, comm);
 
-	    for(i = 0; i < numInputsMFS; i++){
+	    for(i = 0; i < numInputs; i++){
 	    	inputs[i] = malloc(sizeof(float)*inputs_sz[i]);
 	        MPI_Bcast(inputs[i], inputs_sz[i], MPI_FLOAT, 0, comm);
 	    }
 
-	    for(i = 0; i < numOutputsMFS; i++){
+	    for(i = 0; i < numOutputs; i++){
 	    	outputs[i] = malloc(sizeof(float)*outputs_sz[i]);
 	        MPI_Bcast(outputs[i], outputs_sz[i], MPI_FLOAT, 0, comm);
 	    }
@@ -150,19 +157,38 @@ int main(int argc, char* argv[])
 	
 	/*----------------------------------------------------------------*/
 
+	double start, finish, elapsed, local_elapsed = 0;
+
 	/*Read inputs and broadcast them----------------------------------*/
 
-	//TODO
+	in = malloc(sizeof(double)*numInputs);
+	
+	fuzzyValues = malloc(sizeof(double)*local_n);
+	outValues = malloc(sizeof(double)*numOutputs*2);
+	cur_value_v = malloc(sizeof(double)*numInputs);
 
-	in = malloc(sizeof(double)*numInputsMFS);
-	out = malloc(sizeof(double)*numOutputsMFS);
-	for(i = 0; i < numInputsMFS; i++){
-    	in[i] = (rand()%2001 - 1)/2000.0;
-    }
+	if(my_rank == 0){
+		out = malloc(sizeof(double)*numOutputs);
+		#ifdef GENERATE_DATA
+		for(i = 0; i < numInputs; i++){
+	    	in[i] = (rand()%2001 - 1)/2000.0;
+	    }
+	    #endif
+	    #ifndef GENERATE_DATA
+	    if(argc < 2 + numInputs) {
+	        printf("Usage: %s <fis path> <args>\n", argv[0]);
+	        exit(1);
+	    }
+		for(i = 0; i < numInputs; i++){
+	    	in[i] = atof(argv[2+i]);
+	    }
+	    #endif
+	}
 
-    for(i = 0; i < numOutputsMFS; i++){
-    	out[i] = (rand()%1001)/1000.0;
-    }
+	MPI_Barrier(comm);
+	start = MPI_Wtime();
+
+	MPI_Bcast(in, numInputs, MPI_DOUBLE, 0, comm);
 
 	/*----------------------------------------------------------------*/
 
@@ -170,61 +196,91 @@ int main(int argc, char* argv[])
 
 	//fuzzifing
 
-	fuzzyValues = malloc(sizeof(double)*local_n);
-	int jump;
-	float* cur_MF;
-	double* cur_value_v;
-	double cur_value;
-	int cur_MF_sz;
-	cur_value_v = malloc(sizeof(double)*numInputsMFS);
-	for(i = 0; i < 1; i++){
-		jump = 0;
-		for(j = 1; j <= numInputsMFS; j++){
-			cur_MF_sz = (int)(inputs[j-1][local_rules[i*rules_sz_ln+j]]);
+	for(i = 0; i < local_n; i++){
+		
+		for(j = 0; j < numInputs; j++){
+
+			cur_MF_sz = (int)(inputs[j][local_rules[i*rules_sz_ln+j]]);
 			cur_MF = malloc(sizeof(float)*cur_MF_sz);
-			
+
+			jump = 0;
 			for(k = 0; k < local_rules[i*rules_sz_ln+j]; k++)
-				jump += (int)(inputs[j-1][k]);
+				jump += (int)(inputs[j][k]);
+
 			for(k = 0; k < cur_MF_sz; k++){
-				cur_MF[k] = inputs[j-1][k+jump+1];
-			
+				cur_MF[k] = inputs[j][k+jump+1];
 			}
 
-			cur_value_v[j] = fuzzify(in[j-1], cur_MF, cur_MF_sz);
-			//cur_value_v[j] = fuzzify(-1, cur_MF, cur_MF_sz);
+			cur_value_v[j] = fuzzify(in[j], cur_MF, cur_MF_sz);
 			free(cur_MF);
 		}
-		for(j = 0; j < numInputsMFS; j += 2){
-			if(local_rules[i*rules_sz_ln+numInputsMFS] == 1)//andOp
-				fuzzyValues[i] = andOp(cur_value_v[j], cur_value_v[j+1]);
-			else if(local_rules[i*rules_sz_ln+numInputsMFS] == 2)//andOp
-				fuzzyValues[i] = orOp(cur_value_v[j], cur_value_v[j+1]);
+
+		//Implications
+
+		fuzzyValues[i] = cur_value_v[0];
+		for(j = 1; j < numInputs; j ++){
+
+			if(local_rules[i*rules_sz_ln+rules_sz_ln-1] == 1)//andOp
+				fuzzyValues[i] = andOp(cur_value_v[j], fuzzyValues[i]);
+
+			else if(local_rules[i*rules_sz_ln+rules_sz_ln-1] == 2)//andOp
+				fuzzyValues[i] = orOp(cur_value_v[j], fuzzyValues[i]);
 		}
 
-		if(!my_rank){
-			printf("%f\n", fuzzyValues[i]);
+		//Aggregations
+
+		l = 0;
+		for(j = numInputs; j < numOutputs+numInputs; j++){
+
+			cur_MF_sz = (int)(outputs[j - numInputs][local_rules[i*rules_sz_ln+j]]);
+			cur_MF = malloc(sizeof(float)*cur_MF_sz);
+
+			jump = 0;	
+			for(k = 0; k < local_rules[i*rules_sz_ln+j]; k++)
+				jump += (int)(outputs[j - numInputs][k]);
+
+			for(k = 0; k < cur_MF_sz; k++){
+				cur_MF[k] = outputs[j - numInputs][k+jump+1];
+			}
+
+			defuzzify(fuzzyValues[i], cur_MF, cur_MF_sz, &outValues[l], &outValues[l+1]);
+			l += 2;
+			free(cur_MF);
 		}
 
 	}
 
-	//TODO
-
 	/*----------------------------------------------------------------*/
 
-	/*Reduce values---------------------------------------------------*/
+	/*Reduce values and print------------------------------------------*/
 
-	//TODO
+	MPI_Reduce(outValues, out, numOutputs*2, MPI_DOUBLE, MPI_SUM, 0, comm);
+
+	finish = MPI_Wtime();
+
+	local_elapsed = finish - start;
+
+	MPI_Reduce(&local_elapsed, &elapsed, 1, MPI_DOUBLE, MPI_MAX, 0, comm);
+
+	if(my_rank == 0){
+		for (i = 0; i < numOutputs; ++i)
+		{
+			printf("Output%i = %f\n", i, out[i]/out[i+1]);
+		}
+		printf("elapsed = %f\n", elapsed);
+	}
 
 	/*----------------------------------------------------------------*/
 
 	#ifdef DEBUG
-	printf("my_rank = %i NumInputsMFS = %i\n", my_rank, numInputsMFS);
-	printf("my_rank = %i NumOutputsMFS = %i\n", my_rank, numOutputsMFS);
-	printf("my_rank = %i NumRules = %i\n", my_rank, numRules);
-	printf("my_rank = %i Rules = %i\n", my_rank, rules_sz_ln);
-	/*if(my_rank == 1)
-		for(i = 0; i < local_rules_sz; i++)
-			printf("%i\n", local_rules[i]);*/
+	// printf("my_rank = %i NumInputs = %i\n", my_rank, numInputs);
+	// printf("my_rank = %i NumOutputs = %i\n", my_rank, numOutputs);
+	// printf("my_rank = %i NumRules = %i\n", my_rank, numRules);
+	printf("my_rank = %i Rules = %i\n", my_rank, local_n);
+	// for (i = 0; i < inputs_sz[0]; ++i)
+	// {
+	// 	printf("%0.1f\n", inputs[0][i]);
+	// }
 	#endif
 
 
