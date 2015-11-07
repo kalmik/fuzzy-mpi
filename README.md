@@ -13,7 +13,6 @@ sudo apt-get isntall openmpi1.5-bin openmpi1.5-doc libopenmpi1.5-dev
 
 ```
 mpicc fuzzy.c fuzzy-loader.c fuzzy-core.c -o fuzzy
-
 ```
 
 #### options
@@ -26,12 +25,11 @@ mpicc fuzzy.c fuzzy-loader.c fuzzy-core.c -o fuzzy
 
 ```
 mpiexec -n <number of core> ./fuzzy study-cases/testes.fis
-
 ```
 
 ###fuzzy-loader API
 
-Configure your fuzzy sistem based on .fis file from MATLAB&reg;
+Configure your fuzzy system based on .fis file from MATLAB&reg;
 
 ```C
 //Jumping pointer line in file
