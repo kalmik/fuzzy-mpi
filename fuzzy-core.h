@@ -1,20 +1,6 @@
 #ifndef fuzzy_CORE
 #define fuzzy_CORE
 	
-	typedef struct pertinence pertinence;
-	struct pertinence
-	{
-		float* data;
-		int size;
-	};
-
-	typedef struct rule rule;
-	struct rule
-	{
-		float value;
-		pertinence* then;
-	};
-
 	float max(float _a, float _b);
 
 	float min(float _a, float _b);
