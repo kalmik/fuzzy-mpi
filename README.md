@@ -19,6 +19,7 @@ mpicc fuzzy.c fuzzy-loader.c fuzzy-core.c -o fuzzy
 #### options
 
 -DGENERATE_DATA  -- random inputs
+
 -DDEBUG -- debug mode
 
 ### runing
