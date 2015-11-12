@@ -168,7 +168,7 @@ int main(int argc, char* argv[])
 	cur_value_v = malloc(sizeof(double)*numInputs);
 
 	if(my_rank == 0){
-		out = malloc(sizeof(double)*numOutputs);
+		out = malloc(sizeof(double)*numOutputs*2);
 		#ifdef GENERATE_DATA
 		for(i = 0; i < numInputs; i++){
 			in[i] = (rand()%2001 - 1)/2000.0;
