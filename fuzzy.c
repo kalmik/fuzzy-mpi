@@ -264,7 +264,7 @@ int main(int argc, char* argv[])
 	if(my_rank == 0){
 		for (i = 0; i < numOutputs; ++i)
 		{
-			printf("Output%i = %f\n", i, out[i]/out[i+1]);
+			printf("Output%i Ux = %f, U = %f, Ux/U = %f\n", i, out[i], out[i+1], out[i]/out[i+1]);
 		}
 		printf("elapsed = %f\n", elapsed);
 	}
@@ -276,10 +276,10 @@ int main(int argc, char* argv[])
 	printf("my_rank = %i Num. Outputs = %i\n", my_rank, numOutputs);
 	printf("my_rank = %i Num. Total Rules = %i\n", my_rank, numRules);
 	printf("my_rank = %i My Total Rules = %i\n", my_rank, local_n);
-	// for (i = 0; i < inputs_sz[0]; ++i)
-	// {
-	// 	printf("%0.1f\n", inputs[0][i]);
-	// }
+	//for (i = 0; i < inputs_sz[0]; ++i)
+	//{
+	//	printf("%0.1f\n", inputs[0][i]);
+	//}
 	#endif
 
 

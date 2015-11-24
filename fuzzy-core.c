@@ -43,7 +43,6 @@ void defuzzify( double _value, float* _rules, int _size, double* uX, double* u){
 	int i,j;
 	for(i = 0; i < _size; i++){
 		*uX += _rules[i]*_value;
-		//printf("%f\n", _rules[i]);
 		*u += _value;
 	}
 }
