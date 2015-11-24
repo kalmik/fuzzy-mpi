@@ -167,6 +167,10 @@ int main(int argc, char* argv[])
 	outValues = malloc(sizeof(double)*numOutputs*2);
 	cur_value_v = malloc(sizeof(double)*numInputs);
 
+	for(i = 0; i < numOutputs*2; i++){
+		outValues[i] = 0;
+	}
+
 	if(my_rank == 0){
 		out = malloc(sizeof(double)*numOutputs*2);
 		#ifdef GENERATE_DATA
@@ -241,7 +245,6 @@ int main(int argc, char* argv[])
 			for(k = 0; k < cur_MF_sz; k++){
 				cur_MF[k] = outputs[j - numInputs][k+jump+1];
 			}
-
 			defuzzify(fuzzyValues[i], cur_MF, cur_MF_sz, &outValues[l], &outValues[l+1]);
 			l += 2;
 			free(cur_MF);
